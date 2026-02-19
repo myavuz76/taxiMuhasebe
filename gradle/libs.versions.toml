@@ -1,8 +1,7 @@
 [versions]
 agp = "9.0.1"
-kotlin = "1.9.22"
-ksp = "1.9.22-1.0.17"
-room = "2.6.1"
+ksp = "1.9.24-1.0.20"
+room = "2.8.4"
 googleAuth = "21.2.0"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -29,5 +28,4 @@ google-auth = { group = "com.google.android.gms", name = "play-services-auth", v
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

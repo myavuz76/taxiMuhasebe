@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#212121"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- Üst Panel (Başlık ve Kronometre) -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
         android:text="Taxi Kassa Pro"
         android:textColor="#FFC107"
         android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/infoPanel"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
@@ -31,26 +31,21 @@
         android:background="@drawable/panel_background"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView">
+        android:padding="16dp">
 
-        <!-- VARDİYA BÖLÜMÜ -->
+        <!-- VARDİYA, İŞ GÜNÜ, SÜRE BÖLÜMLERİ BURADA KALDI -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="VARDİYA"
                 android:textColor="#BDBDBD"
                 android:textSize="12sp" />
-
             <TextView
                 android:id="@+id/shiftTextView"
                 android:layout_width="wrap_content"
@@ -60,51 +55,41 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-        <!-- İŞ GÜNÜ BÖLÜMÜ -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="İŞ GÜNÜ"
                 android:textColor="#BDBDBD"
                 android:textSize="12sp" />
-
             <Spinner
                 android:id="@+id/workDaySpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent" />
-
         </LinearLayout>
-
-        <!-- SÜRE BÖLÜMÜ -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SÜRE"
                 android:textColor="#BDBDBD"
                 android:textSize="12sp" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-
                 <TextView
                     android:id="@+id/timerTextView"
                     android:layout_width="wrap_content"
@@ -112,7 +97,6 @@
                     android:text="00:00:00"
                     android:textColor="#4CAF50"
                     android:textSize="18sp" />
-
                 <ImageButton
                     android:id="@+id/playPauseButton"
                     android:layout_width="16dp"
@@ -124,7 +108,6 @@
                     android:scaleType="fitCenter"
                     android:src="@android:drawable/ic_media_play"
                     app:tint="#FFC107" />
-
                 <ImageButton
                     android:id="@+id/resetButton"
                     android:layout_width="16dp"
@@ -138,9 +121,219 @@
                     android:visibility="gone"
                     app:tint="#F44336"
                     tools:visibility="visible" />
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Yeni Kazanç Paneli -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="#2C2C2C"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Orta Kısım (Dairesel Gösterge) ve Yan Listeler -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Sol Liste -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/EarningLabel"
+                        android:text="FUNK" />
+                    <TextView
+                        android:id="@+id/funkAmountTextView"
+                        style="@style/EarningAmount"
+                        android:text="0.00€" />
+
+                    <TextView
+                        style="@style/EarningLabel"
+                        android:layout_marginTop="8dp"
+                        android:text="EİNST." />
+                    <TextView
+                        android:id="@+id/einstAmountTextView"
+                        style="@style/EarningAmount"
+                        android:text="0.00€" />
+
+                    <TextView
+                        style="@style/EarningLabel"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#007BFF"
+                        android:text="MÜŞTERİ" />
+
+                </LinearLayout>
+
+                <!-- Orta Gösterge -->
+                <RelativeLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp">
+
+                    <ProgressBar
+                        android:id="@+id/circleProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progressDrawable="@drawable/progress_circle"
+                        android:max="100"
+                        android:progress="75"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GERÇEK"
+                            android:textColor="#BDBDBD"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/gercekAmountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00"
+                            android:textColor="#FFC107"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tipAmountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tip: 0.0"
+                            android:textColor="#BDBDBD"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <!-- Sağ Liste -->
+                 <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/EarningLabel"
+                        android:gravity="end"
+                        android:text="BOLT" />
+                    <TextView
+                        android:id="@+id/boltAmountTextView"
+                        style="@style/EarningAmount"
+                        android:gravity="end"
+                        android:text="0.00€" />
+
+                    <TextView
+                        style="@style/EarningLabel"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:text="UBER" />
+                    <TextView
+                        android:id="@+id/uberAmountTextView"
+                        style="@style/EarningAmount"
+                        android:gravity="end"
+                        android:text="0.00€" />
+
+                    <TextView
+                        style="@style/EarningLabel"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:text="F.NOW" />
+                    <TextView
+                        android:id="@+id/fnowAmountTextView"
+                        style="@style/EarningAmount"
+                        android:gravity="end"
+                        android:text="0.00€" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/vergiAmountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="VERGİ: -0.00€"
+                android:textColor="#F44336"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Alt Kartlar -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:orientation="horizontal">
+
+        <!-- Kart 1: App -->
+        <androidx.cardview.widget.CardView style="@style/DashboardCard.App">
+            <LinearLayout style="@style/DashboardCardLayout">
+                <TextView style="@style/DashboardCardTitle" android:text="App" />
+                <TextView android:id="@+id/appAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
+                <TextView android:id="@+id/appCountTextView" style="@style/DashboardCardCount.App" android:text="0 Adet" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Kart 2: Kart -->
+        <androidx.cardview.widget.CardView style="@style/DashboardCard.Card">
+            <LinearLayout style="@style/DashboardCardLayout">
+                <TextView style="@style/DashboardCardTitle" android:text="Kart" />
+                <TextView android:id="@+id/cardAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
+                <TextView android:id="@+id/cardCountTextView" style="@style/DashboardCardCount.Card" android:text="0 Adet" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Kart 3: Fatura -->
+        <androidx.cardview.widget.CardView style="@style/DashboardCard.Fatura">
+            <LinearLayout style="@style/DashboardCardLayout">
+                <TextView style="@style/DashboardCardTitle" android:text="Fatura" />
+                <TextView android:id="@+id/faturaAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
+                <TextView android:id="@+id/faturaCountTextView" style="@style/DashboardCardCount.Fatura" android:text="0 Adet" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Kart 4: Inkasso -->
+        <androidx.cardview.widget.CardView style="@style/DashboardCard.Inkasso">
+            <LinearLayout style="@style/DashboardCardLayout">
+                <TextView style="@style/DashboardCardTitle" android:text="Inkasso" />
+                <TextView android:id="@+id/inkassoAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
+                <TextView android:id="@+id/inkassoCountTextView" style="@style/DashboardCardCount.Inkasso" android:text="0 Adet" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+</LinearLayout>

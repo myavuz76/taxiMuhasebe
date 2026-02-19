@@ -6,4 +6,95 @@
     </style>
 
     <style name="Theme.TaxiMuhasebe" parent="Base.Theme.TaxiMuhasebe" />
+
+    <!-- Kazanç Paneli Stilleri -->
+    <style name="EarningLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#BDBDBD</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="EarningAmount">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Alt Kart Stilleri -->
+    <style name="DashboardCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="DashboardCard.App">
+        <item name="cardBackgroundColor">#2C2C2C</item>
+    </style>
+    <style name="DashboardCard.Card">
+        <item name="cardBackgroundColor">#2C2C2C</item>
+    </style>
+    <style name="DashboardCard.Fatura">
+        <item name="cardBackgroundColor">#2C2C2C</item>
+    </style>
+    <style name="DashboardCard.Inkasso">
+        <item name="cardBackgroundColor">#2C2C2C</item>
+    </style>
+
+
+    <style name="DashboardCardLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="DashboardCardTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#E0E0E0</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="DashboardCardAmount">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
+    <style name="DashboardCardCount">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
+    <style name="DashboardCardCount.App">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="DashboardCardCount.Card">
+         <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="DashboardCardCount.Fatura">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="DashboardCardCount.Inkasso">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
 </resources>

@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.devtools.ksp)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -30,10 +30,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-
-kotlin {
-    jvmToolchain(11)
 }
 
 dependencies {
