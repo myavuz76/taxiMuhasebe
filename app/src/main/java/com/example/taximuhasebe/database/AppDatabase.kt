@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WorkDay::class], version = 2, exportSchema = false) // Versiyonu 2'ye yükselttik
+@Database(entities = [WorkDay::class, Umsatz::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun workDayDao(): WorkDayDao
+    abstract fun umsatzDao(): UmsatzDao
 
     companion object {
         @Volatile
@@ -21,8 +22,6 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "taxi_database"
                 )
-                // Veritabanı şeması değiştiğinde (versiyon yükseldiğinde), eski veritabanını
-                // silip yeniden oluştur. Bu, geliştirme aşamasında çökmemizi engeller.
                 .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance

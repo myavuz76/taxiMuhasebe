@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="#3C3C3C">
+
+    <!-- # (Sıra No) -->
+    <TextView
+        android:id="@+id/item_number_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:textColor="@android:color/white"
+        tools:text="10" />
+
+    <!-- Umsatz -->
+    <TextView
+        android:id="@+id/umsatz_amount_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        tools:text="30.00€" />
+
+    <!-- Netto -->
+    <TextView
+        android:id="@+id/netto_amount_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:textColor="#4CAF50"
+        android:textStyle="bold"
+        tools:text="24.70€" />
+
+    <!-- Bahşiş -->
+    <TextView
+        android:id="@+id/bahsis_amount_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.1"
+        android:textColor="#FFC107"
+        android:textStyle="bold"
+        tools:text="5.30€" />
+
+    <!-- Fatura -->
+    <TextView
+        android:id="@+id/fatura_amount_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:textColor="#2196F3"
+        android:textStyle="bold"
+        tools:text="24.70€" />
+
+    <!-- Kaynak -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/source_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#2196F3"
+            android:textStyle="bold"
+            tools:text="EINST" />
+
+        <TextView
+            android:id="@+id/payment_type_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#BDBDBD"
+            tools:text="NAKİT" />
+    </LinearLayout>
+
+    <!-- İşlem Butonları -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_edit"
+            app:tint="#2196F3" />
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_delete"
+            app:tint="#F44336" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -96,5 +96,11 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <!-- Umsatz Table Stilleri -->
+    <style name="TableHeader">
+        <item name="android:textColor">#BDBDBD</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>
