@@ -18,9 +18,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taximuhasebe.adapter.UmsatzAdapter
+import com.example.taximuhasebe.adapter.WeeklySummaryAdapter
 import com.example.taximuhasebe.database.AppDatabase
 import com.example.taximuhasebe.database.Umsatz
 import com.example.taximuhasebe.database.WorkDay
+import com.example.taximuhasebe.database.WorkDayWithUmsatz
+import com.example.taximuhasebe.model.WeeklyReportRow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var db: AppDatabase
     private lateinit var umsatzAdapter: UmsatzAdapter
+    private lateinit var weeklyAdapter: WeeklySummaryAdapter
 
     // --- Arayüz Elemanları ---
     private lateinit var timerTextView: TextView
@@ -38,27 +42,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resetButton: ImageButton
     private lateinit var workDaySpinner: Spinner
     private lateinit var umsatzRecyclerView: RecyclerView
+    private lateinit var weeklyRecyclerView: RecyclerView
     private lateinit var titleTextView: TextView
     private lateinit var showMoreButton: ImageView
-    private lateinit var customerCountTextView: TextView
-    // Özet Paneli TextViews
-    private lateinit var funkAmountTextView: TextView
-    private lateinit var einstAmountTextView: TextView
-    private lateinit var gercekAmountTextView: TextView
-    private lateinit var tipAmountTextView: TextView
-    private lateinit var vergiAmountTextView: TextView
-    private lateinit var boltAmountTextView: TextView
-    private lateinit var uberAmountTextView: TextView
-    private lateinit var fnowAmountTextView: TextView
-    // Alt Kartlar TextViews
-    private lateinit var appAmountTextView: TextView
-    private lateinit var appCountTextView: TextView
-    private lateinit var cardAmountTextView: TextView
-    private lateinit var cardCountTextView: TextView
-    private lateinit var faturaAmountTextView: TextView
-    private lateinit var faturaCountTextView: TextView
-    private lateinit var inkassoAmountTextView: TextView
-    private lateinit var inkassoCountTextView: TextView
 
     // --- Liste Yönetimi ---
     private var isShowingAll = false
@@ -105,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         db = AppDatabase.getDatabase(this)
 
         bindViews()
-        setupRecyclerView()
+        setupRecyclerViews()
         setupWorkDaySpinner()
         setupTestButton()
 
@@ -124,30 +110,13 @@ class MainActivity : AppCompatActivity() {
         resetButton = findViewById(R.id.resetButton)
         workDaySpinner = findViewById(R.id.workDaySpinner)
         umsatzRecyclerView = findViewById(R.id.umsatz_recycler_view)
+        weeklyRecyclerView = findViewById(R.id.weekly_summary_recyclerview)
         titleTextView = findViewById(R.id.titleTextView)
         showMoreButton = findViewById(R.id.show_more_button)
-        customerCountTextView = findViewById(R.id.customer_count_textview)
-        // Özet Paneli
-        funkAmountTextView = findViewById(R.id.funkAmountTextView)
-        einstAmountTextView = findViewById(R.id.einstAmountTextView)
-        gercekAmountTextView = findViewById(R.id.gercekAmountTextView)
-        tipAmountTextView = findViewById(R.id.tipAmountTextView)
-        vergiAmountTextView = findViewById(R.id.vergiAmountTextView)
-        boltAmountTextView = findViewById(R.id.boltAmountTextView)
-        uberAmountTextView = findViewById(R.id.uberAmountTextView)
-        fnowAmountTextView = findViewById(R.id.fnowAmountTextView)
-        // Alt Kartlar
-        appAmountTextView = findViewById(R.id.appAmountTextView)
-        appCountTextView = findViewById(R.id.appCountTextView)
-        cardAmountTextView = findViewById(R.id.cardAmountTextView)
-        cardCountTextView = findViewById(R.id.cardCountTextView)
-        faturaAmountTextView = findViewById(R.id.faturaAmountTextView)
-        faturaCountTextView = findViewById(R.id.faturaCountTextView)
-        inkassoAmountTextView = findViewById(R.id.inkassoAmountTextView)
-        inkassoCountTextView = findViewById(R.id.inkassoCountTextView)
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerViews() {
+        // Günlük Liste Adapter
         umsatzAdapter = UmsatzAdapter(
             onEditClick = { umsatz ->
                 Toast.makeText(this@MainActivity, "Düzenle tıklandı: ${umsatz.id}", Toast.LENGTH_SHORT).show()
@@ -161,6 +130,11 @@ class MainActivity : AppCompatActivity() {
         )
         umsatzRecyclerView.adapter = umsatzAdapter
         umsatzRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Haftalık Liste Adapter
+        weeklyAdapter = WeeklySummaryAdapter()
+        weeklyRecyclerView.adapter = weeklyAdapter
+        weeklyRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun setupWorkDaySpinner() {
@@ -218,17 +192,15 @@ class MainActivity : AppCompatActivity() {
         currentWorkDay?.let {
             fullUmsatzList = db.umsatzDao().getUmsatzForWorkDayAsList(it.id)
             updateUmsatzAdapter()
-            updateSummaryPanel()
+            loadWeeklyData()
         } ?: run {
             fullUmsatzList = emptyList()
             updateUmsatzAdapter()
-            updateSummaryPanel()
+            loadWeeklyData()
         }
     }
     
     private fun updateUmsatzAdapter(){
-        customerCountTextView.text = fullUmsatzList.size.toString()
-
         umsatzAdapter.setTotalItemCount(fullUmsatzList.size)
 
         val listToShow = if (isShowingAll) fullUmsatzList else fullUmsatzList.take(5)
@@ -246,54 +218,59 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-     private fun updateSummaryPanel() {
-        val funkTotal = fullUmsatzList.filter { it.source.equals("Funk", true) }.sumOf { it.umsatzAmount }
-        val einstTotal = fullUmsatzList.filter { it.source.equals("Einst", true) }.sumOf { it.umsatzAmount }
-        val boltTotal = fullUmsatzList.filter { it.source.equals("Bolt", true) }.sumOf { it.umsatzAmount }
-        val uberTotal = fullUmsatzList.filter { it.source.equals("Uber", true) }.sumOf { it.umsatzAmount }
-        val fnowTotal = fullUmsatzList.filter { it.source.equals("F-Now", true) }.sumOf { it.umsatzAmount }
+    // --- Haftalık Özet Fonksiyonları ---
+    private fun loadWeeklyData() {
+        lifecycleScope.launch {
+            val (startOfWeek, endOfWeek) = getWeekDateRange()
+            val weeklyData = db.workDayDao().getWorkDaysWithUmsatz(startOfWeek, endOfWeek)
+            val reportRows = processWeeklyData(weeklyData)
+            weeklyAdapter.submitList(reportRows)
+        }
+    }
 
-        val totalBahsis = fullUmsatzList.sumOf { it.bahsisAmount }
-        val totalVergiGenel = fullUmsatzList.filter { !it.source.equals("Bolt", true) }.sumOf { it.nettoAmount } * 0.19
+    private fun getWeekDateRange(): Pair<String, String> {
+        val calendar = Calendar.getInstance()
+        calendar.firstDayOfWeek = Calendar.MONDAY
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY)
+        val startOfWeek = sdf.format(calendar.time)
+        calendar.add(Calendar.DAY_OF_WEEK, 6)
+        val endOfWeek = sdf.format(calendar.time)
+        return Pair(startOfWeek, endOfWeek)
+    }
 
-        // Bolt için vergi hesaplaması
-        val boltNetto = fullUmsatzList.filter { it.source.equals("Bolt", true) }.sumOf { it.nettoAmount }
-        val boltVergi = boltNetto * 0.18
-        val boltSonrasiNetto = boltNetto - boltVergi
-        
-        // Diğerleri için netto toplamı
-        val digerleriNetto = fullUmsatzList.filter { !it.source.equals("Bolt", true) }.sumOf { it.nettoAmount }
-        
-        val gercekTotal = boltSonrasiNetto + digerleriNetto + totalBahsis
+    private fun processWeeklyData(data: List<WorkDayWithUmsatz>): List<WeeklyReportRow> {
+        val rows = mutableListOf<WeeklyReportRow>()
 
-        val appCount = fullUmsatzList.count { it.paymentType.equals("app", true) }
-        val appAmount = fullUmsatzList.filter { it.paymentType.equals("app", true) }.sumOf { it.umsatzAmount }
-        val cardCount = fullUmsatzList.count { it.paymentType.equals("karte", true) }
-        val cardAmount = fullUmsatzList.filter { it.paymentType.equals("karte", true) }.sumOf { it.umsatzAmount }
-        val faturaCount = fullUmsatzList.count { it.faturaAmount > 0 }
-        val faturaAmount = fullUmsatzList.sumOf { it.faturaAmount }
-        val inkassoCount = fullUmsatzList.count { it.paymentType.equals("inkasso", true) }
-        val inkassoAmount = fullUmsatzList.filter { it.paymentType.equals("inkasso", true) }.sumOf { it.umsatzAmount }
+        data.forEach { dayWithUmsatz ->
+            val dayName = SimpleDateFormat("EEEE", Locale("de", "DE")).format(SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY).parse(dayWithUmsatz.workDay.date)!!)
+            val brutto = dayWithUmsatz.umsatzList.sumOf { it.umsatzAmount }
+            val netto = dayWithUmsatz.umsatzList.sumOf { it.nettoAmount }
+            val bahsis = dayWithUmsatz.umsatzList.sumOf { it.bahsisAmount }
+            val fatura = dayWithUmsatz.umsatzList.sumOf { it.faturaAmount }
+            val tmstr = dayWithUmsatz.umsatzList.size
+            val tapp = dayWithUmsatz.umsatzList.filter { it.paymentType.equals("app", true) }.sumOf { it.umsatzAmount }
+            val tkarte = dayWithUmsatz.umsatzList.filter { it.paymentType.equals("karte", true) }.sumOf { it.umsatzAmount }
+            val inkasso = dayWithUmsatz.umsatzList.filter { it.paymentType.equals("inkasso", true) }.sumOf { it.umsatzAmount }
+            val nakit = netto + bahsis - tapp - tkarte - inkasso
 
-        // Update UI
-        funkAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", funkTotal)
-        einstAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", einstTotal)
-        boltAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", boltTotal)
-        uberAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", uberTotal)
-        fnowAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", fnowTotal)
-        
-        gercekAmountTextView.text = String.format(Locale.GERMANY, "%.2f", gercekTotal)
-        tipAmountTextView.text = String.format(Locale.GERMANY, "Tip: %.1f", totalBahsis)
-        vergiAmountTextView.text = String.format(Locale.GERMANY, "VERGİ: -%.2f€", totalVergiGenel + boltVergi)
+            rows.add(WeeklyReportRow(dayName, brutto, netto, bahsis, nakit, fatura, tmstr, tapp, tkarte))
+        }
 
-        appAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", appAmount)
-        appCountTextView.text = "$appCount Adet"
-        cardAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", cardAmount)
-        cardCountTextView.text = "$cardCount Adet"
-        faturaAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", faturaAmount)
-        faturaCountTextView.text = "$faturaCount Adet"
-        inkassoAmountTextView.text = String.format(Locale.GERMANY, "%.2f€", inkassoAmount)
-        inkassoCountTextView.text = "$inkassoCount Adet"
+        if (rows.isNotEmpty()) {
+            val totalBrutto = rows.sumOf { it.brutto }
+            val totalNetto = rows.sumOf { it.netto }
+            val totalBahsis = rows.sumOf { it.bahsis }
+            val totalNakit = rows.sumOf { it.nakit }
+            val totalFatura = rows.sumOf { it.fatura }
+            val totalTmstr = rows.sumOf { it.tmstr.toDouble() }.toInt()
+            val totalTapp = rows.sumOf { it.tapp }
+            val totalTkarte = rows.sumOf { it.tkarte }
+
+            rows.add(WeeklyReportRow("TOPLAM", totalBrutto, totalNetto, totalBahsis, totalNakit, totalFatura, totalTmstr, totalTapp, totalTkarte, isTotalRow = true))
+        }
+
+        return rows
     }
 
     private fun actuallyStartTimer(){
@@ -325,12 +302,15 @@ class MainActivity : AppCompatActivity() {
             isRunning = false
             playPauseButton.setImageResource(android.R.drawable.ic_media_play)
         }
+        elapsedTime = 0
+        updateTimerText()
+        resetButton.visibility = View.GONE
 
         lifecycleScope.launch {
             currentWorkDay?.let {
-                it.totalWorkTimeMs = 0
-                db.workDayDao().update(it)
-                refreshUmsatzList()
+                val updatedWorkDay = it.copy(totalWorkTimeMs = 0)
+                db.workDayDao().update(updatedWorkDay)
+                Toast.makeText(this@MainActivity, "Süre sıfırlandı ve kaydedildi!", Toast.LENGTH_SHORT).show()
             }
         }
     }

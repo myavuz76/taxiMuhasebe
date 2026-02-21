@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 
 @Dao
@@ -23,4 +24,8 @@ interface WorkDayDao {
 
     @Query("SELECT * FROM work_days ORDER BY date DESC")
     suspend fun getAllWorkDays(): List<WorkDay>
+
+    @Transaction
+    @Query("SELECT * FROM work_days WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC")
+    suspend fun getWorkDaysWithUmsatz(startDate: String, endDate: String): List<WorkDayWithUmsatz>
 }

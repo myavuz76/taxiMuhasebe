@@ -130,222 +130,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Yeni Kazanç Paneli -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="#2C2C2C"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Orta Kısım (Dairesel Gösterge) ve Yan Listeler -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <!-- Sol Liste -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/EarningLabel"
-                            android:text="FUNK" />
-                        <TextView
-                            android:id="@+id/funkAmountTextView"
-                            style="@style/EarningAmount"
-                            android:text="0.00€" />
-
-                        <TextView
-                            style="@style/EarningLabel"
-                            android:layout_marginTop="8dp"
-                            android:text="EINST." />
-                        <TextView
-                            android:id="@+id/einstAmountTextView"
-                            style="@style/EarningAmount"
-                            android:text="0.00€" />
-
-                        <TextView
-                            style="@style/EarningLabel"
-                            android:layout_marginTop="8dp"
-                            android:textColor="#007BFF"
-                            android:text="MÜŞTERİ" />
-                        <TextView
-                            android:id="@+id/customer_count_textview"
-                            style="@style/EarningAmount"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <!-- Orta Gösterge -->
-                    <RelativeLayout
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp">
-
-                        <ProgressBar
-                            android:id="@+id/circleProgressBar"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/progress_circle"
-                            android:max="100"
-                            android:progress="75"
-                            />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="GERÇEK"
-                                android:textColor="#BDBDBD"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/gercekAmountTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0.00"
-                                android:textColor="#FFC107"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tipAmountTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tip: 0.0"
-                                android:textColor="#BDBDBD"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <!-- Sağ Liste -->
-                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/EarningLabel"
-                            android:gravity="end"
-                            android:text="BOLT" />
-                        <TextView
-                            android:id="@+id/boltAmountTextView"
-                            style="@style/EarningAmount"
-                            android:gravity="end"
-                            android:text="0.00€" />
-
-                        <TextView
-                            style="@style/EarningLabel"
-                            android:layout_marginTop="8dp"
-                            android:gravity="end"
-                            android:text="UBER" />
-                        <TextView
-                            android:id="@+id/uberAmountTextView"
-                            style="@style/EarningAmount"
-                            android:gravity="end"
-                            android:text="0.00€" />
-
-                        <TextView
-                            style="@style/EarningLabel"
-                            android:layout_marginTop="8dp"
-                            android:gravity="end"
-                            android:text="F-Now" />
-                        <TextView
-                            android:id="@+id/fnowAmountTextView"
-                            style="@style/EarningAmount"
-                            android:gravity="end"
-                            android:text="0.00€" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/vergiAmountTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="VERGİ: -0.00€"
-                    android:textColor="#F44336"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- Alt Kartlar -->
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:columnCount="4"
-            android:orientation="horizontal">
-
-            <!-- Kart 1: App -->
-            <androidx.cardview.widget.CardView style="@style/DashboardCard.App">
-                <LinearLayout style="@style/DashboardCardLayout">
-                    <TextView style="@style/DashboardCardTitle" android:text="App" />
-                    <TextView android:id="@+id/appAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
-                    <TextView android:id="@+id/appCountTextView" style="@style/DashboardCardCount.App" android:text="0 Adet" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Kart 2: Kart -->
-            <androidx.cardview.widget.CardView style="@style/DashboardCard.Card">
-                <LinearLayout style="@style/DashboardCardLayout">
-                    <TextView style="@style/DashboardCardTitle" android:text="Kart" />
-                    <TextView android:id="@+id/cardAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
-                    <TextView android:id="@+id/cardCountTextView" style="@style/DashboardCardCount.Card" android:text="0 Adet" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Kart 3: Fatura -->
-            <androidx.cardview.widget.CardView style="@style/DashboardCard.Fatura">
-                <LinearLayout style="@style/DashboardCardLayout">
-                    <TextView style="@style/DashboardCardTitle" android:text="Fatura" />
-                    <TextView android:id="@+id/faturaAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
-                    <TextView android:id="@+id/faturaCountTextView" style="@style/DashboardCardCount.Fatura" android:text="0 Adet" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Kart 4: Inkasso -->
-            <androidx.cardview.widget.CardView style="@style/DashboardCard.Inkasso">
-                <LinearLayout style="@style/DashboardCardLayout">
-                    <TextView style="@style/DashboardCardTitle" android:text="Inkasso" />
-                    <TextView android:id="@+id/inkassoAmountTextView" style="@style/DashboardCardAmount" android:text="0.00€" />
-                    <TextView android:id="@+id/inkassoCountTextView" style="@style/DashboardCardCount.Inkasso" android:text="0 Adet" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </GridLayout>
-
-        <!-- Umsatz Tablo Başlığı -->
+        <!-- GÜNLÜK Umsatz Tablo Başlığı -->
         <include
             layout="@layout/umsatz_table_header"
             android:layout_width="match_parent"
@@ -357,7 +142,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/umsatz_item" />
 
         <ImageView
@@ -370,6 +154,56 @@
             android:background="?attr/selectableItemBackground"
             android:visibility="gone"
             app:tint="#FFC107" />
+
+        <!-- Haftalık Özet Başlığı -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_my_calendar"
+                app:tint="#FFC107" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="BU HAFTANIN GÜNLERİ"
+                android:textColor="#FFC107"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Haftalık Özet Tablosu -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/weekly_summary_header" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/weekly_summary_recyclerview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/weekly_summary_item" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
     </LinearLayout>
 </ScrollView>

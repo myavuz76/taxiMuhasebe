@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/dayTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        tools:text="Montag" />
+
+    <TextView
+        android:id="@+id/bruttoTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        tools:text="150,00€" />
+
+    <TextView
+        android:id="@+id/nettoTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#4CAF50"
+        android:textSize="14sp"
+        tools:text="130,00€" />
+
+    <TextView
+        android:id="@+id/bahsisTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#FFC107"
+        android:textSize="14sp"
+        tools:text="20,00€" />
+
+    <TextView
+        android:id="@+id/nakitTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#4CAF50"
+        android:textSize="14sp"
+        tools:text="100,00€" />
+
+    <TextView
+        android:id="@+id/faturaTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#2196F3"
+        android:textSize="14sp"
+        tools:text="30,00€" />
+
+    <TextView
+        android:id="@+id/tmstrTextView"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/tappTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        tools:text="50,00€" />
+
+    <TextView
+        android:id="@+id/tkarteTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingEnd="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        tools:text="50,00€" />
+
+</LinearLayout>

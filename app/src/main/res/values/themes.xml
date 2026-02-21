@@ -103,4 +103,18 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Weekly Summary Stilleri -->
+    <style name="WeeklyHeader">
+        <item name="android:textColor">#BDBDBD</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">end</item>
+    </style>
+    <style name="WeeklyHeader.Red">
+        <item name="android:textColor">#F44336</item>
+    </style>
+    <style name="WeeklyHeader.Blue">
+        <item name="android:textColor">#2196F3</item>
+    </style>
+
 </resources>
